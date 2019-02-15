@@ -40,9 +40,7 @@ if compgen -G "environments-*/*/*" > /dev/null ; then
     echo "JASPY Environments from external repositories:"
     echo "=============================================="
 
-    if [ -e environments-* ]; then 
-        list_envs $(ls environments-*/*/*)
-    fi
+    list_envs $(ls environments-*/*/*)
 
 fi
 

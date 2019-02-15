@@ -1,5 +1,3 @@
-#!/bin/bash
-
 # Check if script has been sourced
 (return 2>/dev/null) && sourced=1 || sourced=0
 
