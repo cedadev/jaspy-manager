@@ -12,7 +12,7 @@ TBA...
 ### Quickstart: Python3.7
 
 ```
-$ git clone https://github.com/agstephens/jaspy
+$ git clone https://github.com/cedadev/jaspy
 $ cd jaspy/src/deployment/
 $ export JASPY_BASE_DIR=/usr/local/jaspy
 $ ./install-miniconda.sh py3.7
