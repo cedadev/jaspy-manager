@@ -1,0 +1,6 @@
+    - pip:
+      - cf-python
+      - cf-plot
+      - nappy
+      - f90nml
+      - simplejson

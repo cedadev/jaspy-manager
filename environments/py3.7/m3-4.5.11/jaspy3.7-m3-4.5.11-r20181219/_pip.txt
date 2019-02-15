@@ -1,0 +1,4 @@
+    - pip:
+      - nappy
+      - f90nml
+      - simplejson

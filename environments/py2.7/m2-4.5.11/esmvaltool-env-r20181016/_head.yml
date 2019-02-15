@@ -1,0 +1,5 @@
+name: esmvaltool-env-r20181016
+channels:
+  - conda-forge
+  - defaults
+dependencies:

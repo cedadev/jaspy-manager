@@ -1,0 +1,5 @@
+name: isc-env-r20181009
+channels:
+  - conda-forge
+  - defaults
+dependencies:

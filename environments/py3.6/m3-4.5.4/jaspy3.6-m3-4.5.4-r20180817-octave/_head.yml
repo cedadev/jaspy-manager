@@ -1,0 +1,5 @@
+name: jaspy3.6-m3-4.5.4-r20180817-octave
+channels:
+    - conda-forge
+    - defaults
+dependencies:

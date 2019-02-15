@@ -1,0 +1,12 @@
+# Run with: source <activate-location> <env>
+
+env_code=$1
+
+env_search=$(echo $env_code | sed 's/\//\*/')
+env_dir=$(find __JASPY_BASE_DIR__/jaspy/miniconda_envs/jaspy* -name "${env_search}")
+
+env_name=$(basename $env_dir)
+bin_dir=$(echo $env_dir | cut -d/ -f1-7)/bin
+
+source ${bin_dir}/activate ${env_name}
+

@@ -102,3 +102,6 @@ venv.bak/
 
 # mypy
 .mypy_cache/
+
+# Jaspy environments from other repositories (symlinked)
+src/environments-*

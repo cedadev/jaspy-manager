@@ -1,0 +1,5 @@
+name: cdds-env-r20181024
+channels:
+  - conda-forge
+  - defaults
+dependencies:

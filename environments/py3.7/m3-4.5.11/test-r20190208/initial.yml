@@ -1,0 +1,9 @@
+name: test-r20190208
+channels:
+  - defaults
+  - conda-forge
+dependencies:
+  - nose
+# Pip installs
+  - pip:
+    - simplejson

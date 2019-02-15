@@ -1,0 +1,5 @@
+name: jaspy2.7-m2-4.5.11-r20181220
+channels:
+    - conda-forge
+    - defaults
+dependencies:

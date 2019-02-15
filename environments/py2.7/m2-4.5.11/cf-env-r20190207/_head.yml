@@ -1,0 +1,6 @@
+name: cf-env-r20190207
+channels:
+  - conda-forge
+  - ncas
+  - defaults
+dependencies:

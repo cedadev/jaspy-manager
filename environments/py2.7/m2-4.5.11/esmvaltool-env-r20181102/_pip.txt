@@ -1,0 +1,3 @@
+  - pip:
+    - dummydata==0.1.4
+    - stratify==0.1
