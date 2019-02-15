@@ -24,6 +24,7 @@ echo "-------------------------"
 echo
 echo "The following environment recipes are available to your JASPY installation."
 echo "Note that these are recipes and the environments may not be installed yet."
+echo
 echo "Environments are listed under:"
 echo "  - top-level directory / python version / miniconda version / environment name"
 
@@ -33,10 +34,16 @@ echo "========================"
 
 list_envs $(ls environments/*/*)
 
-echo 
-echo "JASPY Environments from external repositories:"
-echo "=============================================="
+if compgen -G "environments-*/*/*" > /dev/null ; then 
 
-list_envs $(ls environments-*/*/*)
+    echo 
+    echo "JASPY Environments from external repositories:"
+    echo "=============================================="
+
+    if [ -e environments-* ]; then 
+        list_envs $(ls environments-*/*/*)
+    fi
+
+fi
 
 echo
