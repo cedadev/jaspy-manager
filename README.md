@@ -54,7 +54,7 @@ conda is available to create and manage multiple environments.
 
 This diagram attempts to explain the workflow of jaspy:
 
-![alt text](https://github.com/agstephens/jaspy/blob/master/doc/images/jaspy_workflow.png "Jaspy workflow")
+![alt text](https://github.com/cedadev/jaspy/blob/master/doc/images/jaspy_workflow.png "Jaspy workflow")
 
 There are four workflows related to `jaspy`:
 
@@ -87,7 +87,7 @@ explained here. Get your settings as recommended by your administrator (which mi
 **1. Clone Jaspy**
 
 ```
-git clone https://github.com/agstephens/jaspy
+git clone https://github.com/cedadev/jaspy
 cd jaspy/src/deployment/
 ```
 
