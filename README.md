@@ -159,6 +159,13 @@ might be subtle differences (for example in compilers and installed libraries) t
 lead to differences in the installation. Unfortunately, we do not have the resource to 
 guarantee exact reproducibility.
 
+Note that conda allows you to "pin" environments:
+
+https://conda.io/projects/conda/en/latest/user-guide/tasks/manage-environments.html#building-identical-conda-environments
+
+We use this approach but take it one step further by caching everything on our own server
+to ensure that packages are not revoked from remote repositories.
+
 ### Sign-posting "easy" versions for users 
 
 It would be undesirable to expect users to keep track of exact versions (although some
