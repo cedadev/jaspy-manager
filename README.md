@@ -7,7 +7,14 @@ If you need a quick Python environment, try these...
 
 ### Quickstart: Python2.7
 
-TBA...
+```
+$ git clone https://github.com/cedadev/jaspy
+$ cd jaspy/src/deployment/
+$ export JASPY_BASE_DIR=/usr/local/jaspy
+$ ./install-miniconda.sh py2.7
+$ ./install-jaspy-env.sh jaspy2.7-m3-4.5.11-r20181219
+$ python -c 'import sys; print(sys.version)'
+```
 
 ### Quickstart: Python3.7
 
