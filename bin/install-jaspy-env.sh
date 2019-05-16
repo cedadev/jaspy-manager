@@ -44,6 +44,11 @@ cmd="${bin_dir}/conda create --name ${env_name} --file ${spec_file_path} -c ${JA
 echo "[INFO] Running: $cmd"
 $cmd
 
+if [ $? -ne 0 ]; then
+    echo "[ERROR] Failed to create environment."
+    exit
+fi
+
 echo "[INFO] Created conda environment: $env_name"
 
 if [ -f $pip_file_path ]; then
