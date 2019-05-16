@@ -19,6 +19,6 @@ echo "[INFO] Cloning git repository: $repo_url"
 git clone $repo_url
 repo_name=$(basename $repo_url)
 
-cd jaspy/
+cd jaspy-manager/
 
 ${SCRIPTDIR}/link-external-envs-repo.sh ../${repo_name}
