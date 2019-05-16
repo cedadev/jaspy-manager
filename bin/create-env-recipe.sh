@@ -54,7 +54,7 @@ cat $initial_yaml_path | grep -A1000 -P "\-\spip:" > $_pip_spec_file
 
 pip_pkgs_file=${spec_dir}/pip.txt
 echo "[INFO] Generating text file of packages to pip install: $pip_pkgs_file"
-cat $initial_yaml_path | grep -A1000 -P "\-\spip:" | grep -vP "\-\spip:" | sed 's|\s*-\s*||g' > ${pip_pkgs_file}
+cat $initial_yaml_path | grep -A1000 -P "\-\spip:" | grep -vP "\-\spip:" | sed 's|\s*-\s*||' > ${pip_pkgs_file}
 
 spec_head=${spec_dir}/_head.yml
 echo "[INFO] Generating header for explicit yaml file: $spec_head"
