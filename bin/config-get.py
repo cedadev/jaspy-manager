@@ -27,12 +27,12 @@ def _get(py_version, miniconda_version, attribute):
         data = json.load(reader)
 
     if miniconda_version == 'latest':
+
         _all_versions = [i.split('-')[1] for i in data['minicondas'][py_version].keys()]
         m_start = 'm' + py_version.replace('py', '')[0]
 
         _av_ints = sorted([[int(i) for i in item.split('.')] for item in _all_versions])
-        _av_ints.reverse()
-        _all_verisons = ['.'.join([str(item) for item in items]) for items in _av_ints] 
+        _all_versions = ['.'.join([str(item) for item in items]) for items in _av_ints] 
 
         miniconda_version = m_start + '-' + _all_versions[-1] 
 
