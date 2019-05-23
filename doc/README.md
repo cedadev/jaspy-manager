@@ -8,7 +8,7 @@ You can enable (or "activate") the environment with the following lines:
 
 ```
 export PATH=/apps/contrib/jaspy/miniconda_envs/jaspy3.7/m3-4.5.11/bin:$PATH
-source activate jaspy3.7-m3-4.5.11-r20181219
+conda activate jaspy3.7-m3-4.5.11-r20181219
 ```
 
 After that set-up your default python (for the current session) will be python 3.7.****.
@@ -18,7 +18,7 @@ After that set-up your default python (for the current session) will be python 3
 ```
 # Set path and activate conda environment
 export PATH=/apps/contrib/jaspy/miniconda_envs/jaspy3.7/m3-4.5.11/bin:$PATH
-source activate jaspy3.7-m3-4.5.11-r20181219
+conda activate jaspy3.7-m3-4.5.11-r20181219
 
 # Create your own virtualenv - you only do this once!
 virtualenv --system-site-packages my-venv
@@ -39,7 +39,7 @@ And then whenever you just want to use the environment, just do:
 
 ```
 export PATH=/apps/contrib/jaspy/miniconda_envs/jaspy3.7/m3-4.5.11/bin:$PATH
-source activate jaspy3.7-m3-4.5.11-r20181219
+conda activate jaspy3.7-m3-4.5.11-r20181219
 source my-py3-venv/bin/activate
 ```
 

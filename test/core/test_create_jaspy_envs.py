@@ -64,7 +64,7 @@ def _common_create_jaspy_env(py_version, env_name, conda_forge_count):
 
     # Test by activating and listing contents of current environment
     bin_dir = os.path.join(jaspy_base_dir, py_version, 'bin')
-    cmd = 'export PATH={}:$PATH ; source activate {} ; conda list | grep conda-forge | wc -l'.format(bin_dir, env_name)
+    cmd = 'export PATH={}:$PATH ; conda activate {} ; conda list | grep conda-forge | wc -l'.format(bin_dir, env_name)
  
     resp = _run(cmd, jaspy_base_dir, use_func='check_output') 
     assert(resp.decode("utf-8").strip() == str(conda_forge_count))
