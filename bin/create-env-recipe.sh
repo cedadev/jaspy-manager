@@ -38,7 +38,8 @@ if [ $? -ne 0 ]; then
 fi
 
 echo "[INFO] Created conda environment: $env_name"
-source ${SCRIPTDIR}/activate-jaspy-env.sh $env_name
+export PATH=${bin_dir}:$PATH
+source activate $env_name
 
 spec_file=${spec_dir}/_explicit.txt
 echo "[INFO] Generating explicit spec file (excluding pip): $spec_file"
