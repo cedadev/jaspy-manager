@@ -1,5 +1,0 @@
-name: cc-env-r20181008
-channels:
-  - conda-forge
-  - defaults
-dependencies:
