@@ -17,8 +17,12 @@ if [ $base = "linux-64" ]; then
     channel_path=$(dirname $channel_path)
 fi
 
-path_comps=$(echo $channel_path | rev | cut -d/ -f1-2 | rev)
-bin_dir=${JASPY_BASE_DIR}/jaspy/miniconda_envs/${path_comps}/bin
+# Get latest miniconda installed by jaspy
+menvs_dir=${JASPY_BASE_DIR}/jaspy/miniconda_envs
+py_version=$(ls ${menvs_dir}/ | sort | tail -1)
+latest_dir=$(ls ${menvs_dir}/${py_version}/ | sort | tail -1)
+bin_dir=${menvs_dir}/${py_version}/${latest_dir}/bin
+
 export PATH=${bin_dir}:$PATH
 
 conda_build=${bin_dir}/conda-build
