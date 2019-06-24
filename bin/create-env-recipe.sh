@@ -4,10 +4,20 @@ SCRIPTDIR=$(dirname $0)
 source $SCRIPTDIR/common.cfg
 
 initial_yaml_path=$1
+DEBUG=$2
 
 if [ ! $initial_yaml_path ] || [ ! -f $initial_yaml_path ]; then
     echo "[ERROR] Please provide valid YAML environment file as only argument."
     exit
+fi
+
+shopt -s nocasematch
+
+if [ $DEBUG ] && [[ $DEBUG =~ debug ]]; then
+    DEBUG=1
+    echo "[INFO] Debug mode: ON"
+else
+    DEBUG=
 fi
 
 initial_yaml=$(basename $initial_yaml_path)
@@ -29,6 +39,10 @@ bin_dir=${JASPY_BASE_DIR}/jaspy/miniconda_envs/jas${path_comps}/bin
 export PATH=${bin_dir}:$PATH
 
 cmd="${bin_dir}/conda env create -n $env_name -f $initial_yaml_path"
+if [ $DEBUG ]; then
+    cmd="$cmd --verbose"
+fi
+
 echo "[INFO] Running: $cmd"
 $cmd
 
@@ -64,4 +78,11 @@ cat $initial_yaml_path | sed '/dependencies:/q' > $spec_head
 complete_yaml=${spec_dir}/complete.yml
 echo "[INFO] Generating complete explicit yaml file: $complete_yaml"
 cat $spec_head $urls_file $pip_spec_file > $complete_yaml 
+
+packages_file=${spec_dir}/packages.txt
+echo "[INFO] Generating packages text file: $packages_file"
+cat $urls_file | cut -d\- -f2- | xargs -L1 sh -c 'basename $1' _ | sort | sed 's/\.tar\.bz2//g' > $packages_file
+echo "" >> $packages_file
+echo "Pip installs:" >> $packages_file
+cat $pip_pkgs_file >> $packages_file
 
