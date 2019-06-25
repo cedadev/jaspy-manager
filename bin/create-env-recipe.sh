@@ -84,5 +84,11 @@ echo "[INFO] Generating packages text file: $packages_file"
 cat $urls_file | cut -d\- -f2- | xargs -L1 sh -c 'basename $1' _ | sort | sed 's/\.tar\.bz2//g' > $packages_file
 echo "" >> $packages_file
 echo "Pip installs:" >> $packages_file
-cat $pip_pkgs_file >> $packages_file
+cat $pip_pkgs_file | grep -v "#" >> $packages_file
+
+cleaned_file=${spec_dir}/cleaned.txt
+echo "[INFO] Generating cleaned initial yaml file: $cleaned_file"
+sed -n '1,/# Pip installs/ p' $initial_yaml_path | grep -v "#" > $cleaned_file
+echo "# Pip installs" >> $cleaned_file
+cat $_pip_spec_file | grep -v "#" >> $cleaned_file
 
