@@ -24,7 +24,7 @@ source ${PREFIX}/init/bash
 
 export MODULEPATH=/apps/modulefiles:$MODULEPATH
 
-all_envs=$(find $JASPY_BASE_DIR -name "envs" -type d)
+all_envs=$(find $JASPY_BASE_DIR/jaspy -name "envs" -type d)
 
 echo "Define function"
 
@@ -54,7 +54,11 @@ function create_modulefile {
     mkdir -p $mod_dir
 
     mod_file=${mod_dir}/${mod_version}
-    ${PREFIX}/bin/createmodule.py ${bin_dir}/activate $env_name > $mod_file
+
+    # Write the module file, pipe it through a perl regex so that all the 
+    # additional flags/commands are captured in a string. If you don't do
+    # this then Tcl will raise an error when you try to load the module.
+    ${PREFIX}/bin/createmodule.py ${bin_dir}/activate $env_name | perl -p -e 's/^([^u][^n][^s][0-9a-zA-Z\-_]+)(\s+)(\w+)(\s+)(.+)$/\1\2\3\4"\5"/g;' > $mod_file
 
     echo "Wrote modulefile: $mod_file"
 }
