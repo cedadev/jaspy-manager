@@ -53,7 +53,7 @@ function create_modulefile {
     mod_dir=${JASPY_MODULEFILE_BASE_DIR}/${mod_base}
     mkdir -p $mod_dir
 
-    mod_file=${mod_dir}/${mod_version}
+    mod_file=${mod_dir}/${env_name}
 
     # Write the module file, pipe it through a perl regex so that all the 
     # additional flags/commands are captured in a string. If you don't do
