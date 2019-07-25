@@ -35,3 +35,9 @@ Run the create script:
 bin/create-env-recipe.sh environments/py3.7/m3-4.5.11/test-env-r20190725/initial.yml
 ```
 
+If it works, you can activate it with:
+
+```
+export PATH=$JASPY_BASE_DIR/jaspy/miniconda_envs/jaspy3.7/m3-4.5.11/bin:$PATH
+source activate test-env-r20190725
+```
