@@ -21,7 +21,7 @@ pip_fname="pip.txt"
 
 spec_file_dir=$(get_env_path $env_name)
 
-if [ ! $spec_file_dir] || [ ! -d $spec_file_dir ]; then
+if [ ! $spec_file_dir ] || [ ! -d $spec_file_dir ]; then
     echo "[ERROR] Cannot find spec file dir: $spec_file_dir"
     exit 1
 fi
