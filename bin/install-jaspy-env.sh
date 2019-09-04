@@ -21,6 +21,11 @@ pip_fname="pip.txt"
 
 spec_file_dir=$(get_env_path $env_name)
 
+if [ ! $spec_file_dir] || [ ! -d $spec_file_dir ]; then
+    echo "[ERROR] Cannot find spec file dir: $spec_file_dir"
+    exit 1
+fi
+
 spec_file_path=${spec_file_dir}/${channel_urls_fname}
 pip_file_path=${spec_file_dir}/${pip_fname}
 
