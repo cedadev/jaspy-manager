@@ -89,6 +89,8 @@ cd jaspy-manager/
 
 **2. Set your base directory to install jaspy (and the conda packages)**
 
+This is where the conda environments and packages will be installed:
+
 ```
 export JASPY_BASE_DIR=/usr/local/jaspy
 ```
@@ -101,16 +103,22 @@ export JASPY_BASE_DIR=/usr/local/jaspy
 ./bin/install-miniconda.sh py3.7
 ```
 
-**4. Install the conda environment required**
+**4. Add the CEDA repository of Jaspy environment recipes**
 
 ```
-./bin/install-jaspy-env.sh jaspy3.7-m3-4.5.11-r20181219
+./bin/add-envs-repo.sh https://github.com/cedadev/ceda-jaspy-envs
 ```
 
-**5. Activate and use the environment**
+**5. Install a Jappy (conda) environment**
 
 ```
-source ./activate-jaspy-env.sh jaspy3.7-m3-4.5.11-r20181219
+./bin/install-jaspy-env.sh jaspy3.7-m3-4.6.14-r20190627
+```
+
+**6. Activate and use the environment**
+
+```
+source ./bin/activate-jaspy-env.sh jaspy3.7-m3-4.6.14-r20190627
 python -c 'import sys; print(sys.version)'
 ```
 
@@ -119,7 +127,7 @@ python -c 'import sys; print(sys.version)'
 List the available `jaspy` conda environments:
 
 ```
-$JASPY_BASE_DIR/bin/list-conda-envs.sh
+./bin/list-conda-envs.sh
 ```
 
 ## Versioning
@@ -130,15 +138,16 @@ There are different levels of versioning:
   - m2-4.5.4:    https://repo.continuum.io/miniconda/Miniconda2-4.5.4-Linux-x86_64.sh
   - m3-4.3.27.1: https://repo.continuum.io/miniconda/Miniconda3-4.3.27.1-Linux-x86_64.sh
   - m3-4.5.4:    https://repo.continuum.io/miniconda/Miniconda3-4.5.4-Linux-x86_64.sh
+  - m3-4.6.14:   https://repo.continuum.io/miniconda/Miniconda3-4.6.14-Linux-x86_64.sh
 
  2. Python version:
-  - python 2.7.13 
   - python 2.7.15
   - python 3.6.2
+  - python 3.7.3
 
  3. Versions of the `jaspy` environments themselves, e.g.:
-  - jaspy-py27-0.1.0
-  - jaspy-py36-0.2.1
+  - jaspy2.7-m2-4.6.14-r20190715
+  - jaspy3.7-m3-4.6.14-r20190627
 
 To ensure reproducibility, the `jaspy` approach will involve creating a 
 separate environment for each `python` and `miniconda` version as follows:
@@ -147,7 +156,7 @@ separate environment for each `python` and `miniconda` version as follows:
 
 E.g.:
 
- - `/apps/contrib/jaspy/miniconda_envs/jaspy3.7/m3-4.5.11/envs/jaspy3.7-m3-4.5.11-r20181218`
+ - `/apps/contrib/jaspy/miniconda_envs/jaspy3.7/m3-4.6.14/envs/jaspy3.7-m3-4.6.14-r20190627`
 
 ### Note on reproducibility
 
