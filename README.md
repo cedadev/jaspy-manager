@@ -109,16 +109,24 @@ export JASPY_BASE_DIR=/usr/local/jaspy
 ./bin/add-envs-repo.sh https://github.com/cedadev/ceda-jaspy-envs
 ```
 
-**5. Install a Jappy (conda) environment**
+**5. Install a Jaspy (conda) environment**
+
+From the above repository we can see there is an environment called `jaspy3.7-m3-4.6.14-r20190627`:
 
 ```
-./bin/install-jaspy-env.sh jaspy3.7-m3-4.6.14-r20190627
+ENV_NAME=jaspy3.7-m3-4.6.14-r20190627
+./bin/install-jaspy-env.sh $ENV_NAME
 ```
 
 **6. Activate and use the environment**
 
 ```
-source ./bin/activate-jaspy-env.sh jaspy3.7-m3-4.6.14-r20190627
+py_version=$(echo $ENV_NAME | cut -d\- -f1)
+miniconda_version=$(echo $ENV_NAME | cut -d\- -f2-3)
+
+export PATH=/usr/local/jaspy/jaspy/miniconda_envs/${py_version}/${miniconda_version}/bin:$PATH
+source activate $ENV_NAME
+
 python -c 'import sys; print(sys.version)'
 ```
 
