@@ -22,7 +22,7 @@ ENV_NAME=jaspy3.7-m3-4.6.14-r20190627
 py_version=$(echo $ENV_NAME | cut -d\- -f1)
 miniconda_version=$(echo $ENV_NAME | cut -d\- -f2-3)
 
-export PATH=/usr/local/jaspy/jaspy/miniconda_envs/${py_version}/${miniconda_version}/bin:$PATH
+export PATH=$JASPY_BASE_DIR/jaspy/miniconda_envs/${py_version}/${miniconda_version}/bin:$PATH
 source activate $ENV_NAME
 
 python -c 'import sys; print(sys.version)'
@@ -136,7 +136,7 @@ ENV_NAME=jaspy3.7-m3-4.6.14-r20190627
 py_version=$(echo $ENV_NAME | cut -d\- -f1)
 miniconda_version=$(echo $ENV_NAME | cut -d\- -f2-3)
 
-export PATH=/usr/local/jaspy/jaspy/miniconda_envs/${py_version}/${miniconda_version}/bin:$PATH
+export PATH=$JASPY_BASE_DIR/jaspy/miniconda_envs/${py_version}/${miniconda_version}/bin:$PATH
 source activate $ENV_NAME
 
 python -c 'import sys; print(sys.version)'
