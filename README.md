@@ -8,12 +8,24 @@ If you need a quick Python environment, try...
 ### Quickstart: Python3.7
 
 ```
-$ git clone https://github.com/cedadev/jaspy-manager
-$ cd jaspy-manager
-$ export JASPY_BASE_DIR=/usr/local/jaspy
-$ ./bin/install-jaspy-env.sh jaspy3.7-m3-4.5.11-r20181219
-$ source bin/activate-jaspy-env.sh jaspy3.7-m3-4.5.11-r20181219
-$ python -c 'import sys; print(sys.version)'
+git clone https://github.com/cedadev/jaspy-manager
+cd jaspy-manager/
+
+export JASPY_BASE_DIR=/usr/local/jaspy
+./bin/install-miniconda.sh py3.7
+
+./bin/add-envs-repo.sh https://github.com/cedadev/ceda-jaspy-envs
+
+ENV_NAME=jaspy3.7-m3-4.6.14-r20190627
+./bin/install-jaspy-env.sh $ENV_NAME
+
+py_version=$(echo $ENV_NAME | cut -d\- -f1)
+miniconda_version=$(echo $ENV_NAME | cut -d\- -f2-3)
+
+export PATH=/usr/local/jaspy/jaspy/miniconda_envs/${py_version}/${miniconda_version}/bin:$PATH
+source activate $ENV_NAME
+
+python -c 'import sys; print(sys.version)'
 ```
 
 ## Overview
