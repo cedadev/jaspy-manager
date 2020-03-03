@@ -62,7 +62,7 @@ target_dir="${JASPY_SERVER_PATH}/jas${path_comps}/${PLATFORM}"
 remote_server=$(echo $target_dir | cut -d: -f1)
 remote_dir=$(echo $target_dir | cut -d: -f2)
 
-echo "[INFO] Making remote directory: ${remove_server}:${remote_dir}"
+echo "[INFO] Making remote directory: ${remote_server}:${remote_dir}"
 ssh ${remote_server} mkdir -p ${remote_dir}
 
 echo "[INFO] Copying binaries to cache directory for transferral: ${JASPY_XFER_CACHE_DIR}"
