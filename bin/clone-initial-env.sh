@@ -19,7 +19,12 @@ new_env=$2
 INITIAL_FILE="initial.yml"
 
 if [ ! $env_spec ] || [ ! $new_env ]; then
-    echo "[ERROR] Must provide 2 arguments: <env_name> <new_env_name>"
+    echo "[ERROR] Must provide 2 arguments: <env_name> <new_env>"
+    echo ""
+    echo "<env_name> is the name of the existing environment, or path to the env directory, or path to the initial.yml file itself"
+    echo ""
+    echo "if <new_env> is only the name then the env will be created in a directory alongside the existing one"
+    echo "if <new_env> contains a / then it will be treated as the path (whether absolute or relative to current directory)"
     exit
 fi
 
@@ -45,7 +50,13 @@ if [ ! $env_dir ] || [ ! -d $env_dir ]; then
 fi
 
 base_dir=$(dirname $env_dir)
-new_dir=${base_dir}/$new_env
+
+if echo $new_env | grep -q /
+then
+    new_dir=$new_env
+else
+    new_dir=${base_dir}/$new_env
+fi
 
 echo "[INFO] Creating environment directory: ${new_dir}"
 mkdir -p $new_dir
@@ -53,6 +64,6 @@ mkdir -p $new_dir
 new_env_yaml=${new_dir}/${INITIAL_FILE}
 echo "[INFO] Writing new YAML file: ${new_env_yaml}"
 
-echo "name: ${new_env}" > $new_env_yaml
+echo "name: $(basename ${new_env})" > $new_env_yaml
 tail -n +2 ${env_dir}/${INITIAL_FILE} >>  ${new_env_yaml}
 
