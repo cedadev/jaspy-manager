@@ -4,7 +4,7 @@ dn = os.path.dirname
 
 USER = os.environ.get('USER')
 TEST_DIR = os.environ.get('JASPY_TEST_DIR', '/home/{}/jaspy-test'.format(USER))
-TEST_DIR = '/apps/contrib'
+TEST_DIR = '/apps/jasmin'
 
 
 THIS_DIR = dn(os.path.realpath(__file__))

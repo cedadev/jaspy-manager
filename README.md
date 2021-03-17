@@ -176,7 +176,7 @@ separate environment for each `python` and `miniconda` version as follows:
 
 E.g.:
 
- - `/apps/contrib/jaspy/miniconda_envs/jaspy3.7/m3-4.6.14/envs/jaspy3.7-m3-4.6.14-r20190627`
+ - `/apps/jasmin/jaspy/miniconda_envs/jaspy3.7/m3-4.6.14/envs/jaspy3.7-m3-4.6.14-r20190627`
 
 ### Note on reproducibility
 
@@ -201,7 +201,7 @@ Users can activate a given `jaspy` environment using one of two methods:
    `source ${JASPY_BASE_DIR}/bin/activate <jaspy_env_id>`
 
  2. Module files:
-   `module load contrib/jaspy<py_version>[/<jaspy_sub_version>]`
+   `module load jasmin/jaspy<py_version>[/<jaspy_sub_version>]`
 
 ## FAQs
 

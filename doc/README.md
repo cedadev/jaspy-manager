@@ -2,12 +2,12 @@
 
 We are rolling out a new system for building and managing Python environments on 
 JASMIN. There is a prototype Python 3.7 environment that you can try out which is 
-mounted under `/apps/contrib/` across all the main LOTUS and `jasmin-sci*` servers. 
+mounted under `/apps/jasmin/` across all the main LOTUS and `jasmin-sci*` servers. 
 
 You can enable (or "activate") the environment with the following lines:
 
 ```
-export PATH=/apps/contrib/jaspy/miniconda_envs/jaspy3.7/m3-4.5.11/bin:$PATH
+export PATH=/apps/jasmin/jaspy/miniconda_envs/jaspy3.7/m3-4.5.11/bin:$PATH
 conda activate jaspy3.7-m3-4.5.11-r20181219
 ```
 
@@ -17,7 +17,7 @@ After that set-up your default python (for the current session) will be python 3
 
 ```
 # Set path and activate conda environment
-export PATH=/apps/contrib/jaspy/miniconda_envs/jaspy3.7/m3-4.5.11/bin:$PATH
+export PATH=/apps/jasmin/jaspy/miniconda_envs/jaspy3.7/m3-4.5.11/bin:$PATH
 conda activate jaspy3.7-m3-4.5.11-r20181219
 
 # Create your own virtualenv - you only do this once!
@@ -38,7 +38,7 @@ python -c 'import matplotlib; import pytest'
 And then whenever you just want to use the environment, just do:
 
 ```
-export PATH=/apps/contrib/jaspy/miniconda_envs/jaspy3.7/m3-4.5.11/bin:$PATH
+export PATH=/apps/jasmin/jaspy/miniconda_envs/jaspy3.7/m3-4.5.11/bin:$PATH
 conda activate jaspy3.7-m3-4.5.11-r20181219
 source my-py3-venv/bin/activate
 ```
