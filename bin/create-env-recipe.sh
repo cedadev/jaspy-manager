@@ -38,7 +38,7 @@ bin_dir=${JASPY_BASE_DIR}/jaspy/miniconda_envs/jas${path_comps}/bin
 
 export PATH=${bin_dir}:$PATH
 
-cmd="${bin_dir}/conda env create -n $env_name -f $initial_yaml_path"
+cmd="${bin_dir}/mamba env create -n $env_name -f $initial_yaml_path"
 if [ $DEBUG ]; then
     cmd="$cmd --verbose"
 fi

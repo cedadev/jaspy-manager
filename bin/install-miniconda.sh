@@ -58,4 +58,6 @@ else
     $target -b -p $prefix 
 fi
 
-
+# Install mamba into base conda env
+echo "[INFO] Installing 'mamba' into base conda env."
+$prefix/bin/conda install -y -c conda-forge mamba
