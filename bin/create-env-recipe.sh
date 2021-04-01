@@ -38,6 +38,7 @@ bin_dir=${JASPY_BASE_DIR}/jaspy/miniconda_envs/jas${path_comps}/bin
 
 export PATH=${bin_dir}:$PATH
 
+# Set up and run mamba command to create an environment
 cmd="${bin_dir}/mamba env create -n $env_name -f $initial_yaml_path"
 if [ $DEBUG ]; then
     cmd="$cmd --verbose"
@@ -47,13 +48,13 @@ echo "[INFO] Running: $cmd"
 $cmd
 
 if [ $? -ne 0 ]; then
-    echo "[ERROR] 'conda env create' FAILED, so exiting."
+    echo "[ERROR] 'mamba env create' FAILED, so exiting."
     exit
 fi
 
 echo "[INFO] Created conda environment: $env_name"
 export PATH=${bin_dir}:$PATH
-source activate $env_name
+source ${bin_dir}/activate $env_name
 
 spec_file=${spec_dir}/_explicit.txt
 echo "[INFO] Generating explicit spec file (excluding pip): $spec_file"
@@ -81,7 +82,7 @@ cat $spec_head $urls_file $pip_spec_file > $complete_yaml
 
 packages_file=${spec_dir}/packages.txt
 echo "[INFO] Generating packages text file: $packages_file"
-cat $urls_file | cut -d\- -f2- | xargs -L1 sh -c 'basename $1' _ | sort | sed 's/\.tar\.bz2//g' > $packages_file
+cat $urls_file | cut -d\- -f2- | xargs -L1 sh -c 'basename $1' _ | sort | sed 's/\.tar\.bz2//g' | sed 's/\.conda//g' > $packages_file
 echo "" >> $packages_file
 echo "Pip installs:" >> $packages_file
 cat $pip_pkgs_file | grep -v "#" >> $packages_file
