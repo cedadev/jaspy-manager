@@ -1,35 +1,45 @@
 #!/bin/bash
 
 # Script to create a version of the YAML environment file with 
-# explicit URLs pointing to the JASPY channels on the CEDA server
+# pointing to the JASPY channels on the CEDA server
 #
-# 1. Read the complete file
-# 2. Modify URLs as follows:
-#    - https://conda.anaconda.org/conda-forge/linux-64
-#    - https://conda.anaconda.org/conda-forge/noarch
-#    - https://repo.anaconda.com/pkgs/main
-# 3. Put everything under: the JASPY channel URLs
+# 1. Read the packages file
+# 2. Modify to provide the exact package+version+build for each package
+# 3. Point to JASPY channel only
 
 SCRIPTDIR=$(dirname $0)
 source ${SCRIPTDIR}/common.cfg
 
 PLATFORM=linux-64
 
-complete_yaml_path=$1
+packages_path=$1
 
-if [ ! $complete_yaml_path ] || [ ! -f $complete_yaml_path ]; then
-    echo "ERROR: Please provide valid YAML environment file as only argument."
+if [ ! $packages_path ] || [ ! -f $packages_path ]; then
+    echo "ERROR: Please provide valid packages file as only argument."
     exit
 fi
 
-complete_yaml=$(basename $complete_yaml_path)
+packages_file=$(basename $packages_path)
 
-if [ $complete_yaml != 'complete.yml' ]; then
-    echo "ERROR: Input YAML file must be called: 'complete.yml'."
+if [ $packages_file != 'packages.txt' ]; then
+    echo "ERROR: Input packages file must be called: 'packages.txt'."
     exit
 fi
 
-spec_dir=$(dirname $complete_yaml_path)
+
+# FUNCTION to convert each package string into that required by conda
+function get_pkg_string {
+    pkg=$1
+    version=$(echo $LINE | rev | awk -F'-' '{print $2}' | rev)
+    build=$(echo $LINE | rev | awk -F'-' '{print $1}' | rev)
+    count=$(awk -F"-" '{print NF-1}' <<< "${LINE}")
+    package=$(echo $LINE | cut -d\- -f1-$(($count - 1)))
+    pkg_string="${package}=${version}=${build}"
+    echo $pkg_string
+}
+
+
+spec_dir=$(dirname $packages_path)
 
 # Get the env_name from the directory
 env_name=$(basename $spec_dir)
@@ -37,13 +47,38 @@ env_name=$(basename $spec_dir)
 # Get the python version from the next directory up
 path_comps=$(echo $spec_dir | rev | cut -d/ -f2-3 | rev)
 
-# Set base URL for packages in JASPY channel
-url_base=${JASPY_CHANNEL_URL}/jas${path_comps}/${PLATFORM}
+# Write `final-spec.yml` environment file 
+final_spec_file=${spec_dir}/final-spec.yml
 
-# Write `channel-urls.txt` environment file pointing to our URLs
-jaspy_channel_urls=${spec_dir}/channel-urls.txt
+# Write header
+echo "name: $env_name" > $final_spec_file
+echo "channels:" >> $final_spec_file
+echo "  - http://dist.ceda.ac.uk/jaspy/jas${path_comps}/linux-64/" >> $final_spec_file
+echo "  - conda-forge" >> $final_spec_file
+echo "dependencies:" >> $final_spec_file
 
-cat ${complete_yaml_path} | grep http | sed 's|\s*-.*/|'$url_base'/|g' > ${jaspy_channel_urls}
+pip_section=0
+
+while read LINE; do
+
+    if [[ "$LINE" =~ ^$ ]]; then
+        continue
+    fi
+
+    if [[ "$LINE" =~ "Pip installs:" ]]; then
+        pip_section=1
+        echo "  - pip:" >> $final_spec_file
+        continue
+    fi 
+    
+    if [ $pip_section -eq 0 ]; then
+        pkg_string=$(get_pkg_string ${LINE}) 
+        echo "  - $pkg_string" >> $final_spec_file
+    else
+        echo "    - $LINE" >> $final_spec_file 
+    fi
+
+done < $packages_path
 
 echo "Wrote explicit YAML file pointing at JASPY channel:"
-echo "  ${jaspy_channel_urls}"
+echo "  ${final_spec_file}"
