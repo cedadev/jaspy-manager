@@ -45,6 +45,8 @@ fi
 bin_dir=${JASPY_BASE_DIR}/jaspy/miniconda_envs/jas${path_comps}/bin
 export PATH=${bin_dir}:$PATH
 
+echo "[INFO] Creating new jaspy environment"
+
 cmd="${bin_dir}/mamba env create -f ${spec_file_path}"
 echo "[INFO] Running: $cmd"
 $cmd
@@ -56,6 +58,14 @@ fi
 
 echo "[INFO] Created conda environment: $env_name"
 
+echo "[INFO] Creating symlinks to compilers"
+
+env_bin_dir="$(dirname ${bin_dir})/envs/${env_name}/bin"
+cd $env_bin_dir
+prefix=x86_64-conda-linux-gnu-
+for exe in $prefix* ; do ln -s $exe ${exe/$prefix/} ; done
+
+echo
 echo "[INFO] You can activate and use this environment with:"
 echo "  export PATH=${bin_dir}:\$PATH"
 echo "  source activate $env_name"

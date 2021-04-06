@@ -38,6 +38,7 @@ bin_dir=${JASPY_BASE_DIR}/jaspy/miniconda_envs/jas${path_comps}/bin
 
 export PATH=${bin_dir}:$PATH
 
+# Set up and run mamba command to create an environment
 cmd="${bin_dir}/mamba env create -n $env_name -f $initial_yaml_path"
 if [ $DEBUG ]; then
     cmd="$cmd --verbose"
@@ -53,7 +54,7 @@ fi
 
 echo "[INFO] Created conda environment: $env_name"
 export PATH=${bin_dir}:$PATH
-source activate $env_name
+source ${bin_dir}/activate $env_name
 
 spec_file=${spec_dir}/_explicit.txt
 echo "[INFO] Generating explicit spec file (excluding pip): $spec_file"
