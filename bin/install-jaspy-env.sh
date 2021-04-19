@@ -47,7 +47,7 @@ export PATH=${bin_dir}:$PATH
 
 echo "[INFO] Creating new jaspy environment"
 
-cmd="${bin_dir}/mamba env create -f ${spec_file_path}"
+cmd="mamba env create -f ${spec_file_path}"
 echo "[INFO] Running: $cmd"
 $cmd
 
