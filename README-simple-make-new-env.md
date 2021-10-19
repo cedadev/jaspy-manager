@@ -15,24 +15,16 @@ mkdir -p $JASPY_BASE_DIR
 ./bin/clone-initial-env.sh environments/py3.7/m3-4.5.11/isc-env-r20181009 test-env-r20190725
 ```
 
-Reduce the new environment:
+Test we can build an env with a file:
 
 ```
-$ cat environments/py3.7/m3-4.5.11/test-env-r20190725/initial.yml
-name: test-env-r20190725
-channels:
-  - conda-forge
-  - defaults
-dependencies:
-  - numpy
-  - pip:
-    - ceda-cc
+exported.yml
 ```
 
-Run the create script:
+Build it locally with:
 
 ```
-bin/create-env-recipe.sh environments/py3.7/m3-4.5.11/test-env-r20190725/initial.yml
+./bin/install-jaspy-env.sh environments-ceda-jaspy-envs/py3.8/m3-4.9.2/jaspy3.8-m3-4.9.2-r20211105
 ```
 
 If it works, you can activate it with:
@@ -40,4 +32,23 @@ If it works, you can activate it with:
 ```
 export PATH=$JASPY_BASE_DIR/jaspy/miniconda_envs/jaspy3.7/m3-4.5.11/bin:$PATH
 source activate test-env-r20190725
+```
+
+Copy to dist server:
+
+```
+
+```
+
+Create final recipe using dist server URLs
+
+```
+
+```
+
+
+Install on JASMIN:
+
+```
+
 ```

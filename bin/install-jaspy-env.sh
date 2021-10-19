@@ -61,9 +61,14 @@ echo "[INFO] Created conda environment: $env_name"
 echo "[INFO] Creating symlinks to compilers"
 
 env_bin_dir="$(dirname ${bin_dir})/envs/${env_name}/bin"
-cd $env_bin_dir
+cd $env_bin_dir/
+
 prefix=x86_64-conda-linux-gnu-
-for exe in $prefix* ; do ln -s $exe ${exe/$prefix/} ; done
+for exe in $prefix* ; do 
+    if [ ! -e $exe ]; then 
+        ln -s $exe ${exe/$prefix/}
+    fi
+done
 
 echo
 echo "[INFO] You can activate and use this environment with:"
