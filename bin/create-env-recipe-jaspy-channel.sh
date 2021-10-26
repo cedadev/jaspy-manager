@@ -45,7 +45,8 @@ spec_dir=$(dirname $packages_path)
 env_name=$(basename $spec_dir)
 
 # Get the python version from the next directory up
-path_comps=$(echo $spec_dir | rev | cut -d/ -f2-3 | rev)
+sub_version=$(basename $(dirname $spec_dir))
+miniconda_version=$(basename $spec_dir | cut -d/ -f2 | cut -d\- -f2-3)
 
 # Write `final-spec.yml` environment file 
 final_spec_file=${spec_dir}/final-spec.yml
@@ -53,7 +54,7 @@ final_spec_file=${spec_dir}/final-spec.yml
 # Write header
 echo "name: $env_name" > $final_spec_file
 echo "channels:" >> $final_spec_file
-echo "  - http://dist.ceda.ac.uk/jaspy/jas${path_comps}/linux-64/" >> $final_spec_file
+echo "  - http://dist.ceda.ac.uk/jaspy/jas${sub_version}/${miniconda_version}/linux-64/" >> $final_spec_file
 echo "  - conda-forge" >> $final_spec_file
 echo "dependencies:" >> $final_spec_file
 
@@ -82,3 +83,4 @@ done < $packages_path
 
 echo "Wrote explicit YAML file pointing at JASPY channel:"
 echo "  ${final_spec_file}"
+

@@ -19,30 +19,28 @@ env_name=$(basename $env_name)
 final_spec_fname="final-spec.yml"
 pip_fname="pip.txt"
 
-spec_file_dir=$(get_env_path $env_name)
+spec_dir=$(get_env_path $env_name)
 
-if [ ! $spec_file_dir ] || [ ! -d $spec_file_dir ]; then
-    echo "[ERROR] Cannot find spec file dir: $spec_file_dir"
+if [ ! $spec_dir ] || [ ! -d $spec_dir ]; then
+    echo "[ERROR] Cannot find spec file dir: $spec_dir"
     exit 1
 fi
 
-spec_file_path=${spec_file_dir}/${final_spec_fname}
-pip_file_path=${spec_file_dir}/${pip_fname}
-
-path_comps=$(echo $spec_file_dir | rev | cut -d/ -f2-3 | rev)
+spec_file_path=${spec_dir}/${final_spec_fname}
+pip_file_path=${spec_dir}/${pip_fname}
 
 # Run miniconda installer: does nothing if already installed
-py_version=$(echo $path_comps | cut -d/ -f1)
-miniconda_version=$(echo $path_comps | cut -d/ -f2)
+sub_version=$(basename $(dirname $spec_dir))
+miniconda_version=$(basename $spec_dir | cut -d/ -f2 | cut -d\- -f2-3)
 
-${SCRIPTDIR}/install-miniconda.sh ${py_version} ${miniconda_version}
+${SCRIPTDIR}/install-miniconda.sh ${sub_version} ${miniconda_version}
 
 if [ $? -ne 0 ]; then
     echo "[ERROR] Miniconda install failed so stopping."
     exit
 fi
 
-bin_dir=${JASPY_BASE_DIR}/jaspy/miniconda_envs/jas${path_comps}/bin
+bin_dir=${JASPY_BASE_DIR}/jaspy/miniconda_envs/jas${sub_version}/${miniconda_version}/bin
 export PATH=${bin_dir}:$PATH
 
 echo "[INFO] Creating new jaspy environment"

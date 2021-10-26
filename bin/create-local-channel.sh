@@ -1,9 +1,9 @@
 #!/bin/bash
 
 # 1. Creates a directory:
-#    ${JASPY_BASE_DIR}/channels/${py_version}/linux-64/
+#    ${JASPY_BASE_DIR}/channels/${sub_version}/linux-64/
 #
-# 2. Symlinks all "*.tar.bz" files from: ${JASPY_BASE_DIR}/${py_version}/pkgs/
+# 2. Symlinks all "*.tar.bz" files from: ${JASPY_BASE_DIR}/${sub_version}/pkgs/
 #    into the above directory
 #
 # 3. Installs conda-build
@@ -23,10 +23,10 @@ if [ ! $env_name ] ; then
     exit
 fi
 
-jaspy_version=$(echo $env_name | cut -d\- -f1)
+sub_version=$(echo $env_name | cut -d\- -f1)
 miniconda_version=$(echo $env_name | cut -d\- -f2-3)
 
-miniconda_env_dir=${JASPY_BASE_DIR}/jaspy/miniconda_envs/${jaspy_version}/${miniconda_version}
+miniconda_env_dir=${JASPY_BASE_DIR}/jaspy/miniconda_envs/${sub_version}/${miniconda_version}
 bin_dir=${miniconda_env_dir}/bin
 
 if [ ! -d $bin_dir ] ; then
@@ -43,7 +43,7 @@ $cmd
 
 echo "Create channels directory and symlink packages"
 channels_dir=${JASPY_BASE_DIR}/jaspy/channels
-channel_dir=${channels_dir}/${jaspy_version}/${miniconda_version}
+channel_dir=${channels_dir}/${sub_version}/${miniconda_version}
 noarch_dir=${channel_dir}/noarch
 linux_64_dir=${channel_dir}/linux-64
 
@@ -75,7 +75,7 @@ echo "Running: $cmd"
 $cmd
 
 echo "Test it with conda search."
-cmd="${bin_dir}/conda search -c file://${channels_dir}/${jaspy_version}/${miniconda_version}/ --platform linux-64 --override-channels"
+cmd="${bin_dir}/conda search -c file://${channels_dir}/${sub_version}/${miniconda_version}/ --platform linux-64 --override-channels"
 echo "Running: $cmd"
 $cmd
 

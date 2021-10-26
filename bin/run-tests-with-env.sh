@@ -15,7 +15,7 @@ fi
 yaml_path=$(get_env_path $env_name)
 
 path_comps=$(echo $yaml_path | rev | cut -d/ -f2-3 | rev)
-py_version=$(echo $path_comps | cut -d/ -f1 | cut -c3-)
+sub_version=$(echo $path_comps | cut -d/ -f1 | cut -c3-)
 
 bin_dir=${JASPY_BASE_DIR}/jaspy/miniconda_envs/jas${path_comps}/bin
 export PATH=${bin_dir}:$PATH
@@ -23,7 +23,7 @@ export PATH=${bin_dir}:$PATH
 echo "[INFO] Activating conda environment: $env_name"
 source activate $env_name
 
-tests_dir=environment/python${py_version}
+tests_dir=environment/python${sub_version}
 echo "[INFO] Running tests at: $tests_dir"
 cd ${SCRIPTDIR}/test/
 
