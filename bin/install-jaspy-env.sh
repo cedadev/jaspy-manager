@@ -16,7 +16,7 @@ fi
 # then just take the last component as the env name.
 env_name=$(basename $env_name)
 
-final_spec_fname="final-spec.yml"
+spec_fname="_explicit.txt"
 pip_fname="pip.txt"
 
 spec_dir=$(get_env_path $env_name)
@@ -26,7 +26,7 @@ if [ ! $spec_dir ] || [ ! -d $spec_dir ]; then
     exit 1
 fi
 
-spec_file_path=${spec_dir}/${final_spec_fname}
+spec_file_path=${spec_dir}/${spec_fname}
 pip_file_path=${spec_dir}/${pip_fname}
 
 # Run miniconda installer: does nothing if already installed
@@ -45,7 +45,10 @@ export PATH=${bin_dir}:$PATH
 
 echo "[INFO] Creating new jaspy environment"
 
-cmd="mamba env create -f ${spec_file_path}"
+#cmd="mamba env create -f ${spec_file_path}"
+#cmd="conda env create -f ${spec_file_path}"
+cmd="conda create --name ${env_name} --file ${spec_file_path}"
+
 echo "[INFO] Running: $cmd"
 $cmd
 
@@ -55,6 +58,16 @@ if [ $? -ne 0 ]; then
 fi
 
 echo "[INFO] Created conda environment: $env_name"
+
+if [ -f $pip_file_path ]; then
+    echo "[INFO] Installing additional packages via PIP..."
+    source ${bin_dir}/activate $env_name
+    ${bin_dir}/conda install --yes pip
+    pip install --upgrade pip
+    pip install -r ${pip_file_path} 
+else
+    echo "[INFO] No pip packages specified"
+fi
 
 echo "[INFO] Creating symlinks to compilers"
 
