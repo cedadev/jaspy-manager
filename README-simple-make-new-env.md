@@ -53,7 +53,8 @@ Copy to dist server:
 On archman2, index the channels. 
 
 ```
-
+cd jaspy-manager/
+./bin/index-channel.sh /datacentre/opshome/dist/htdocs/jaspy/jasr3.6
 
 ```
 
@@ -61,5 +62,6 @@ On archman2, index the channels.
 Install on JASMIN:
 
 ```
-
+cd jaspy-manager/
+./bin/install-jaspy-env jasr3.6-m3-4.9.2-r20211105
 ```

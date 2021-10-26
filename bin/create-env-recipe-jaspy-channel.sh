@@ -45,7 +45,7 @@ spec_dir=$(dirname $packages_path)
 env_name=$(basename $spec_dir)
 
 # Get the python version from the next directory up
-sub_version=$(basename $(dirname $spec_dir))
+sub_version=$(basename $(dirname $(dirname $spec_dir)))
 miniconda_version=$(basename $spec_dir | cut -d/ -f2 | cut -d\- -f2-3)
 
 # Write `final-spec.yml` environment file 

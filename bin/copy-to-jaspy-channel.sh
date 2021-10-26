@@ -38,7 +38,7 @@ spec_dir=$(dirname $channel_urls_path)
 env_name=$(basename $spec_dir)
 
 # Get the python version from the next directory up
-sub_version=$(basename $(dirname $spec_dir))
+sub_version=$(basename $(dirname $(dirname $spec_dir)))
 miniconda_version=$(basename $spec_dir | cut -d/ -f2 | cut -d\- -f2-3)
 
 miniconda_env_dir=${JASPY_BASE_DIR}/jaspy/miniconda_envs/jas${sub_version}/${miniconda_version}
