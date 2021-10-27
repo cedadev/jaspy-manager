@@ -7,7 +7,7 @@ sub_version=$1
 miniconda_version=$2
 
 if [ ! $sub_version ] || [[ ! $sub_version =~ ^[pr][y]?[0-9]\.[0-9]$ ]]; then
-    echo "[ERROR] Please provide a valid python version in the form: py<n>.<m>"
+    echo "[ERROR] Please provide a valid sub-version in the form: py<n>.<m> or r<n>.<m>"
     exit
 fi
 

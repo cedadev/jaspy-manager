@@ -16,8 +16,10 @@ fi
 # then just take the last component as the env name.
 env_name=$(basename $env_name)
 
-spec_fname="_explicit.txt"
-pip_fname="pip.txt"
+#spec_fname="_explicit_dist.txt"
+#spec_fname="final-spec.yml"
+spec_fname="initial.yml"
+#pip_fname="pip.txt"
 
 spec_dir=$(get_env_path $env_name)
 
@@ -27,10 +29,10 @@ if [ ! $spec_dir ] || [ ! -d $spec_dir ]; then
 fi
 
 spec_file_path=${spec_dir}/${spec_fname}
-pip_file_path=${spec_dir}/${pip_fname}
+#pip_file_path=${spec_dir}/${pip_fname}
 
 # Run miniconda installer: does nothing if already installed
-sub_version=$(basename $(dirname $spec_dir))
+sub_version=$(basename $(dirname $(dirname $spec_dir)))
 miniconda_version=$(basename $spec_dir | cut -d/ -f2 | cut -d\- -f2-3)
 
 ${SCRIPTDIR}/install-miniconda.sh ${sub_version} ${miniconda_version}
@@ -45,9 +47,9 @@ export PATH=${bin_dir}:$PATH
 
 echo "[INFO] Creating new jaspy environment"
 
-#cmd="mamba env create -f ${spec_file_path}"
+cmd="mamba env create -f ${spec_file_path}"
 #cmd="conda env create -f ${spec_file_path}"
-cmd="conda create --name ${env_name} --file ${spec_file_path}"
+#cmd="mamba create --name ${env_name} --file ${spec_file_path}"
 
 echo "[INFO] Running: $cmd"
 $cmd
@@ -59,7 +61,7 @@ fi
 
 echo "[INFO] Created conda environment: $env_name"
 
-if [ -f $pip_file_path ]; then
+if [ -f "$pip_file_path" ]; then
     echo "[INFO] Installing additional packages via PIP..."
     source ${bin_dir}/activate $env_name
     ${bin_dir}/conda install --yes pip
