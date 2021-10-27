@@ -15,14 +15,14 @@ PLATFORM=linux-64
 packages_path=$1
 
 if [ ! $packages_path ] || [ ! -f $packages_path ]; then
-    echo "ERROR: Please provide valid packages file as only argument."
+    echo "[ERROR] Please provide valid packages file as only argument."
     exit
 fi
 
 packages_file=$(basename $packages_path)
 
 if [ $packages_file != 'packages.txt' ]; then
-    echo "ERROR: Input packages file must be called: 'packages.txt'."
+    echo "[ERROR] Input packages file must be called: 'packages.txt'."
     exit
 fi
 
@@ -51,10 +51,12 @@ miniconda_version=$(basename $spec_dir | cut -d/ -f2 | cut -d\- -f2-3)
 # Write `final-spec.yml` environment file 
 final_spec_file=${spec_dir}/final-spec.yml
 
+dist_channel_url=${JASPY_CHANNEL_URL}/jas${sub_version}/${miniconda_version}
+
 # Write header
 echo "name: $env_name" > $final_spec_file
 echo "channels:" >> $final_spec_file
-echo "  - http://dist.ceda.ac.uk/jaspy/jas${sub_version}/${miniconda_version}/linux-64/" >> $final_spec_file
+echo "  - ${dist_channel_url}" >> $final_spec_file
 echo "  - conda-forge" >> $final_spec_file
 echo "dependencies:" >> $final_spec_file
 
@@ -81,6 +83,11 @@ while read LINE; do
 
 done < $packages_path
 
-echo "Wrote explicit YAML file pointing at JASPY channel:"
+echo "[INFO] Wrote explicit YAML file pointing at JASPY channel:"
 echo "  ${final_spec_file}"
 
+echo "[INFO] Writing explicit file with 'dist' server URLs"
+explicit_dist_file=${spec_dir}/_explicit_dist.txt
+
+cat ${spec_dir}/_explicit.txt | sed "s|http.*/|${dist_channel_url}/linux-64/|g" > $explicit_dist_file
+echo "[INFO] Wrote: $explicit_dist_file"
