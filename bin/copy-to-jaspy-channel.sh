@@ -25,7 +25,7 @@ if [ ! $channel_urls_path ] || [ ! -f $channel_urls_path ]; then
 fi
 
 channels_url_fname=$(basename $channel_urls_path)
-expected_name="channel-urls.txt"
+expected_name="_urls.txt"
 
 if [ $channels_url_fname != $expected_name ]; then
     echo "[ERROR]: Input YAML file must be called: '${expected_name}'."
@@ -38,12 +38,10 @@ spec_dir=$(dirname $channel_urls_path)
 env_name=$(basename $spec_dir)
 
 # Get the python version from the next directory up
-path_comps=$(echo $spec_dir | rev | cut -d/ -f2-3 | rev)
+sub_version=$(basename $(dirname $(dirname $spec_dir)))
+miniconda_version=$(basename $spec_dir | cut -d/ -f2 | cut -d\- -f2-3)
 
-jaspy_version=$(echo $env_name | cut -d\- -f1)
-miniconda_version=$(echo $env_name | cut -d\- -f2-3)
-
-miniconda_env_dir=${JASPY_BASE_DIR}/jaspy/miniconda_envs/jas${path_comps}
+miniconda_env_dir=${JASPY_BASE_DIR}/jaspy/miniconda_envs/jas${sub_version}/${miniconda_version}
 pkgs_dir=${miniconda_env_dir}/pkgs
 
 echo "[INFO] Checking existence of all binaries before caching."
@@ -57,7 +55,7 @@ for binary in $(cat ${channel_urls_path} | grep http | sed 's|.*/||g'); do
     fi
 done
 
-target_dir="${JASPY_SERVER_PATH}/jas${path_comps}/${PLATFORM}"
+target_dir="${JASPY_SERVER_PATH}/jas${sub_version}/${miniconda_version}/${PLATFORM}"
 
 remote_server=$(echo $target_dir | cut -d: -f1)
 remote_dir=$(echo $target_dir | cut -d: -f2)
@@ -69,6 +67,7 @@ echo "[INFO] Copying binaries to cache directory for transferral: ${JASPY_XFER_C
 
 for binary in $(cat ${channel_urls_path} | grep http | sed 's|.*/||g'); do
     pkg=${pkgs_dir}/$binary
+    echo "[DEBUG] Working on: $pkg"
     cp $pkg ${JASPY_XFER_CACHE_DIR}/
 done
 

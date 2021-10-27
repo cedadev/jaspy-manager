@@ -19,9 +19,9 @@ fi
 
 # Get latest miniconda installed by jaspy
 menvs_dir=${JASPY_BASE_DIR}/jaspy/miniconda_envs
-py_version=$(ls ${menvs_dir}/ | sort | tail -1)
-latest_dir=$(ls ${menvs_dir}/${py_version}/ | sort | tail -1)
-bin_dir=${menvs_dir}/${py_version}/${latest_dir}/bin
+sub_version=$(ls ${menvs_dir}/ | sort | tail -1)
+latest_dir=$(ls ${menvs_dir}/${sub_version}/ | sort | tail -1)
+bin_dir=${menvs_dir}/${sub_version}/${latest_dir}/bin
 
 export PATH=${bin_dir}:$PATH
 

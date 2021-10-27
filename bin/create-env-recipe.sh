@@ -33,8 +33,10 @@ spec_dir=$(dirname $initial_yaml_path)
 env_name=$(basename $spec_dir)
 
 # Get the python version from the next directory up
-path_comps=$(echo $spec_dir | rev | cut -d/ -f2-3 | rev)
-bin_dir=${JASPY_BASE_DIR}/jaspy/miniconda_envs/jas${path_comps}/bin
+sub_version=$(basename $(dirname $(dirname $spec_dir)))
+miniconda_version=$(basename $spec_dir | cut -d/ -f2 | cut -d\- -f2-3)
+
+bin_dir=${JASPY_BASE_DIR}/jaspy/miniconda_envs/jas${sub_version}/${miniconda_version}/bin
 
 export PATH=${bin_dir}:$PATH
 
@@ -83,9 +85,13 @@ cat $spec_head $urls_file $pip_spec_file > $complete_yaml
 packages_file=${spec_dir}/packages.txt
 echo "[INFO] Generating packages text file: $packages_file"
 cat $urls_file | cut -d\- -f2- | xargs -L1 sh -c 'basename $1' _ | sort | sed 's/\.tar\.bz2//g' | sed 's/\.conda//g' > $packages_file
-echo "" >> $packages_file
-echo "Pip installs:" >> $packages_file
-cat $pip_pkgs_file | grep -v "#" >> $packages_file
+
+# Write pip section if there are any packages required
+if [ -s $pip_pkgs_file ]; then
+    echo "" >> $packages_file
+    echo "Pip installs:" >> $packages_file
+    cat $pip_pkgs_file | grep -v "#" >> $packages_file
+fi
 
 cleaned_file=${spec_dir}/cleaned.txt
 echo "[INFO] Generating cleaned initial yaml file: $cleaned_file"

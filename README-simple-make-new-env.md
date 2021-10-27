@@ -17,14 +17,13 @@ mkdir -p $JASPY_BASE_DIR
 
 Test we can build an env with a file:
 
-```
-exported.yml
-```
+Create an `initial.yml` file.
 
-Build it locally with:
+Build the associated files and check it works:
 
 ```
-./bin/install-jaspy-env.sh environments-ceda-jaspy-envs/py3.8/m3-4.9.2/jaspy3.8-m3-4.9.2-r20211105
+./bin/create-env-recipe.sh environments-ceda-jaspy-envs/r3.6/jasr3.6-m3-4.9.2-r20211105/initial.yml
+
 ```
 
 If it works, you can activate it with:
@@ -34,15 +33,28 @@ export PATH=$JASPY_BASE_DIR/jaspy/miniconda_envs/jaspy3.7/m3-4.5.11/bin:$PATH
 source activate test-env-r20190725
 ```
 
+Create URLs file that points to our own channel:
+
+```
+./bin/create-env-recipe-jaspy-channel.sh environments-ceda-jaspy-envs/r3.6/jasr3.6-m3-4.9.2-r20211105/packages.txt
+
+
+```
+
 Copy to dist server:
 
 ```
+. ./setup-env.sh
+./bin/copy-to-jaspy-channel.sh environments-ceda-jaspy-envs/r3.6/jasr3.6-m3-4.9.2-r20211105/_urls.txt
+
 
 ```
 
-Create final recipe using dist server URLs
+On archman2, index the channels. 
 
 ```
+cd jaspy-manager/
+./bin/index-channel.sh /datacentre/opshome/dist/htdocs/jaspy/jasr3.6
 
 ```
 
@@ -50,5 +62,6 @@ Create final recipe using dist server URLs
 Install on JASMIN:
 
 ```
-
+cd jaspy-manager/
+./bin/install-jaspy-env jasr3.6-m3-4.9.2-r20211105
 ```

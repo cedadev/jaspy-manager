@@ -19,7 +19,7 @@ def _find_config_file():
     return config
 
     
-def _get(py_version, miniconda_version, attribute):
+def _get(sub_version, miniconda_version, attribute):
 
     config = _find_config_file()
 
@@ -28,8 +28,8 @@ def _get(py_version, miniconda_version, attribute):
 
     if miniconda_version == 'latest':
 
-        _all_versions = [i.split('-')[1] for i in data['minicondas'][py_version].keys()]
-        m_start = 'm' + py_version.replace('py', '')[0]
+        _all_versions = [i.split('-')[1] for i in data['minicondas'][sub_version].keys()]
+        m_start = 'm' + sub_version.replace('py', '').replace('r', '')[0]
 
         _av_ints = sorted([[int(i) for i in item.split('.')] for item in _all_versions])
         _all_versions = ['.'.join([str(item) for item in items]) for items in _av_ints] 
@@ -37,9 +37,9 @@ def _get(py_version, miniconda_version, attribute):
         miniconda_version = m_start + '-' + _all_versions[-1] 
 
     try:
-        attr = data['minicondas'][py_version][miniconda_version][attribute]
+        attr = data['minicondas'][sub_version][miniconda_version][attribute]
     except:
-        print('Could not find {} attribute for python version: "{}"'.format(attribute, py_version))
+        print('Could not find {} attribute for python version: "{}"'.format(attribute, sub_version))
 
     return attr
 
@@ -48,7 +48,7 @@ if __name__ == '__main__':
 
 
     parser = argparse.ArgumentParser()
-    parser.add_argument("py_version", type=str, help="Python version")
+    parser.add_argument("sub_version", type=str, help="Python version")
     parser.add_argument("attribute", type=str, choices=['url', 'md5', 'short_id'],
                         help="Attribute")
 
@@ -56,5 +56,5 @@ if __name__ == '__main__':
                         help='Add Miniconda version (or use "latest").',
                         type=str)
     args = parser.parse_args()
-    print(_get(args.py_version, args.miniconda_version, args.attribute))
+    print(_get(args.sub_version, args.miniconda_version, args.attribute))
 

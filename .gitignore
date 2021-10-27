@@ -105,3 +105,4 @@ venv.bak/
 
 # Jaspy environments from other repositories (symlinked)
 src/environments-*
+setup-env.sh
