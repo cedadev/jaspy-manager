@@ -16,8 +16,6 @@ fi
 # then just take the last component as the env name.
 env_name=$(basename $env_name)
 
-#spec_fname="_explicit_dist.txt"
-#spec_fname="final-spec.yml"
 spec_fname="initial.yml"
 #pip_fname="pip.txt"
 
@@ -48,8 +46,6 @@ export PATH=${bin_dir}:$PATH
 echo "[INFO] Creating new jaspy environment"
 
 cmd="mamba env create -f ${spec_file_path}"
-#cmd="conda env create -f ${spec_file_path}"
-#cmd="mamba create --name ${env_name} --file ${spec_file_path}"
 
 echo "[INFO] Running: $cmd"
 $cmd
