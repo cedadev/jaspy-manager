@@ -59,7 +59,8 @@ function create_modulefile {
     revision=$(echo $env_name | cut -d- -f4)
 
     envs_dir=$(dirname $_dir)
-    bin_dir=$(dirname $envs_dir)/bin
+    main_dir=$(dirname $envs_dir)
+    bin_dir=${main_dir}/bin
  
     mod_dir=${JASPY_MODULEFILE_BASE_DIR}/${jas_type}/${jas_type_version}
     mkdir -p $mod_dir
@@ -72,6 +73,10 @@ function create_modulefile {
     ${PREFIX}/bin/createmodule.py ${bin_dir}/activate $env_name | perl -p -e 's/^([^u][^n][^s][0-9a-zA-Z\-_]+)(\s+)(\w+)(\s+)(.+)$/\1\2\3\4"\5"/g;' | perl -p -e 's/unsetenv/\nunsetenv/g;' > $mod_file
 
     echo "[INFO] Wrote modulefile: $mod_file"
+    if [ ! "$(grep condabin $mod_file)" ] ; then
+        echo "[WARNING] Please add condabin to PATH manually in: $mod_file"
+        echo "E.g..... to prepend-path       PATH    ${main_dir}/condabin - to existing line!"
+    fi
 }
 
 
