@@ -74,6 +74,13 @@
            "md5": "122c8c9beb51e124ab32a0fa6426c656",
            "short_id": "m3-4.9.2"
        }
+    },
+    "r4.0": {
+       "m3-4.9.2": {
+           "url": "https://repo.anaconda.com/miniconda/Miniconda3-py38_4.9.2-Linux-x86_64.sh",
+           "md5": "122c8c9beb51e124ab32a0fa6426c656",
+           "short_id": "m3-4.9.2"
+       }
     }
   }
 }
