@@ -1,4 +1,53 @@
-# Simple instructions to make a new Jaspy env
+# Making new Jaspy environments
+
+## Overview
+
+There are 2 different methods that we use for constructing a Jaspy environment.
+The (1) _quick method_ pulls in the packages from Conda channels on the web.
+The (2) _full method_ pulls in those packages, caches them on our server, and 
+installs using only those files.
+
+Method (2) is more reproducible, but we have found it is less reliable when we
+try to build environments with many 100s of packages.
+
+## Methods of creating and installing Jaspy environments
+ 
+### 1. Quick method
+
+The quick method includes the following steps:
+
+1. Decide on a miniconda version - ensure it is recorded in our config file.
+2. Download and install the miniconda version.
+3. Connect the `ceda-jaspy-envs` repository to the local repo.
+4. Create a name for the new environment.
+5. Create an initial recipe of software packages for the new environment.
+6. Run the `create-env-recipe.sh` script.
+7. Run the `create-env-recipe-jaspy-channel.sh` script.
+8. Push the changes to GitHub
+9. On the server where the env needs installing, run: `install-jaspy-env.sh`
+
+### 2. Full method
+
+The full method is preferred, because it caches _all packages_ on our system, so that we can
+definitely reproduce the same environment over time:
+
+1. Decide on a miniconda version - ensure it is recorded in our config file.
+2. Download and install the miniconda version.
+3. Connect the `ceda-jaspy-envs` repository to the local repo.
+4. Create a name for the new environment.
+5. Create an initial recipe of software packages for the new environment.
+6. Run the `create-env-recipe.sh` script.
+7. Run the `create-env-recipe-jaspy-channel.sh` script.
+8. Push the changes to GitHub
+9. Copy the binaries of the packages to our Jaspy channel server, with `copy-to-jaspy-channel.sh`
+10. On the Jaspy channel server, index the new packages
+11. Adjust the `install-jaspy-env.sh` script to use the file containing our local URLs 
+12. On the server where the env needs installing, run: `install-jaspy-env.sh` using our local URLs
+
+
+## Notes (that need tidying)
+
+These notes outline how the process has been run in the past...kept for reference.
 
 ```
 mkdir /tmp/test
@@ -50,7 +99,7 @@ Copy to dist server:
 
 ```
 
-On archman2, index the channels. 
+On dist server, index the channels. 
 
 ```
 cd jaspy-manager/

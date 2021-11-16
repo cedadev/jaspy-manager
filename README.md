@@ -5,7 +5,7 @@ Conda environments for JASMIN (and beyond)
 
 If you need a quick Python environment, try...
 
-### Quickstart: Python3.7
+### Quickstart: Python3.8
 
 ```
 git clone https://github.com/cedadev/jaspy-manager
@@ -16,13 +16,13 @@ export JASPY_BASE_DIR=/usr/local/jaspy
 
 ./bin/add-envs-repo.sh https://github.com/cedadev/ceda-jaspy-envs
 
-ENV_NAME=jaspy3.7-m3-4.6.14-r20190627
+ENV_NAME=jaspy3.8-m3-4.9.2-r20211105
 ./bin/install-jaspy-env.sh $ENV_NAME
 
-py_version=$(echo $ENV_NAME | cut -d\- -f1)
+sub_version=$(echo $ENV_NAME | cut -d\- -f1)
 miniconda_version=$(echo $ENV_NAME | cut -d\- -f2-3)
 
-export PATH=$JASPY_BASE_DIR/jaspy/miniconda_envs/${py_version}/${miniconda_version}/bin:$PATH
+export PATH=$JASPY_BASE_DIR/jaspy/miniconda_envs/${sub_version}/${miniconda_version}/bin:$PATH
 source activate $ENV_NAME
 
 python -c 'import sys; print(sys.version)'
@@ -49,7 +49,7 @@ The ecosystem of conda tools includes three main players. It is useful to unders
 distinction between them:
 
  - **Conda**:	The package management system itself.
- - **Anaconda**:	A pre-selected set of (over 250) scientific software packages that can
+ - **Anaconda**:	A pre-selected set of (over 500) scientific software packages that can
 	 be installed in a single (conda) environment.
  - **Miniconda**:	A basic installer that contains an entire Python installation and the
  	 conda package manager.
@@ -112,7 +112,7 @@ export JASPY_BASE_DIR=/usr/local/jaspy
 (Not really required but included for completeness)
 
 ```
-./bin/install-miniconda.sh py3.7
+./bin/install-miniconda.sh py3.8
 ```
 
 **4. Add the CEDA repository of Jaspy environment recipes**
@@ -123,20 +123,20 @@ export JASPY_BASE_DIR=/usr/local/jaspy
 
 **5. Install a Jaspy (conda) environment**
 
-From the above repository we can see there is an environment called `jaspy3.7-m3-4.6.14-r20190627`:
+From the above repository we can see there is an environment called `jaspy3.8-m3-4.9.2-r20211105`:
 
 ```
-ENV_NAME=jaspy3.7-m3-4.6.14-r20190627
+ENV_NAME=jaspy3.8-m3-4.9.2-r20211105
 ./bin/install-jaspy-env.sh $ENV_NAME
 ```
 
 **6. Activate and use the environment**
 
 ```
-py_version=$(echo $ENV_NAME | cut -d\- -f1)
+sub_version=$(echo $ENV_NAME | cut -d\- -f1)
 miniconda_version=$(echo $ENV_NAME | cut -d\- -f2-3)
 
-export PATH=$JASPY_BASE_DIR/jaspy/miniconda_envs/${py_version}/${miniconda_version}/bin:$PATH
+export PATH=$JASPY_BASE_DIR/jaspy/miniconda_envs/${sub_version}/${miniconda_version}/bin:$PATH
 source activate $ENV_NAME
 
 python -c 'import sys; print(sys.version)'
@@ -201,7 +201,7 @@ Users can activate a given `jaspy` environment using one of two methods:
    `source ${JASPY_BASE_DIR}/bin/activate <jaspy_env_id>`
 
  2. Module files:
-   `module load jasmin/jaspy<py_version>[/<jaspy_sub_version>]`
+   `module load jasmin/jaspy<sub_version>[/<jaspy_sub_version>]`
 
 ## FAQs
 
