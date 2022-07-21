@@ -25,7 +25,8 @@ def get_conda_packages():
     get a list of conda package specifications.
     also returns a set of just the names
     """
-    
+
+    packages = []
     names = set()    
     conda_meta_dir = os.path.normpath(os.path.join(
         os.path.dirname(sys.executable),
