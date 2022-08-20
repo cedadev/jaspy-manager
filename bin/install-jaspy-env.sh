@@ -81,6 +81,7 @@ done
 
 echo
 echo "[INFO] You can activate and use this environment with:"
-echo "  export PATH=${bin_dir}:\$PATH"
-echo "  source activate $env_name"
+echo "  source ${bin_dir}/activate"
+echo "  conda activate $env_name"
+
 
