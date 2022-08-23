@@ -59,8 +59,9 @@ echo "[INFO] Created conda environment: $env_name"
 
 if [ -f "$pip_file_path" ]; then
     echo "[INFO] Installing additional packages via PIP..."
-    source ${bin_dir}/activate $env_name
-    ${bin_dir}/conda install --yes pip
+    source ${bin_dir}/activate 
+    conda activate $env_name
+    conda install --yes pip
     pip install --upgrade pip
     pip install -r ${pip_file_path} 
 else
@@ -69,15 +70,15 @@ fi
 
 echo "[INFO] Creating symlinks to compilers"
 
-env_bin_dir="$(dirname ${bin_dir})/envs/${env_name}/bin"
-cd $env_bin_dir/
+#env_bin_dir="$(dirname ${bin_dir})/envs/${env_name}/bin"
+#cd $env_bin_dir/
 
-prefix=x86_64-conda-linux-gnu-
-for exe in $prefix* ; do 
-    if [ ! -e $exe ]; then 
-        ln -s $exe ${exe/$prefix/}
-    fi
-done
+#prefix=x86_64-conda-linux-gnu-
+#for exe in $prefix* ; do 
+#    if [ ! -e $exe ]; then 
+#        ln -s $exe ${exe/$prefix/}
+#    fi
+#done
 
 echo
 echo "[INFO] You can activate and use this environment with:"
