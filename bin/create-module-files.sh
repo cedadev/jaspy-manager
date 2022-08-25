@@ -67,10 +67,20 @@ function create_modulefile {
 
     mod_file=${mod_dir}/${revision}
 
+    # Create a temporary script to wrap the activation lines into a single command
+    tmp_activator=/tmp/tmp-jaspy-activator.sh
+    echo "source ${bin_dir}/activate" > $tmp_activator
+    echo "conda activate $env_name" >> $tmp_activator
+    chmod 750 $tmp_activator
+
     # Write the module file, pipe it through a perl regex so that all the 
     # additional flags/commands are captured in a string. If you don't do
     # this then Tcl will raise an error when you try to load the module.
-    ${PREFIX}/bin/createmodule.py ${bin_dir}/activate $env_name | perl -p -e 's/^([^u][^n][^s][0-9a-zA-Z\-_]+)(\s+)(\w+)(\s+)(.+)$/\1\2\3\4"\5"/g;' | perl -p -e 's/unsetenv/\nunsetenv/g;' > $mod_file
+# OLD - ${PREFIX}/bin/createmodule.py ${bin_dir}/activate $env_name
+    ${PREFIX}/bin/createmodule.py $tmp_activator | perl -p -e 's/^([^u][^n][^s][0-9a-zA-Z\-_]+)(\s+)(\w+)(\s+)(.+)$/\1\2\3\4"\5"/g;' | perl -p -e 's/unsetenv/\nunsetenv/g;' > $mod_file
+
+    # Remove temporary activator script
+    rm -f $tmp_activator
 
     echo "[INFO] Wrote modulefile: $mod_file"
     if [ ! "$(grep condabin $mod_file)" ] ; then
