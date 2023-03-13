@@ -106,4 +106,7 @@ venv.bak/
 # Jaspy environments from other repositories (symlinked)
 environments-*
 setup-env.sh
+
+# emacs backups
+*~
 quick-software-tests
