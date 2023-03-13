@@ -40,22 +40,6 @@ bin_dir=${JASPY_BASE_DIR}/jaspy/miniconda_envs/jas${sub_version}/${miniconda_ver
 
 export PATH=${bin_dir}:$PATH
 
-# Set up and run mamba command to create an environment
-cmd="${bin_dir}/mamba env create -n $env_name -f $initial_yaml_path"
-if [ $DEBUG ]; then
-    cmd="$cmd --verbose"
-fi
-
-echo "[WARN] Not running create command - new method now used!"
-#echo "[INFO] Running: $cmd"
-#$cmd
-
-if [ $? -ne 0 ]; then
-    echo "[ERROR] 'mamba env create' FAILED, so exiting."
-    exit
-fi
-
-#echo "[INFO] Created conda environment: $env_name"
 echo "[INFO] Creating extra files to describe environment."
 source ${bin_dir}/activate
 conda activate $env_name
@@ -100,4 +84,8 @@ echo "[INFO] Generating cleaned initial yaml file: $cleaned_file"
 sed -n '1,/# Pip installs/ p' $initial_yaml_path | grep -v "#" > $cleaned_file
 echo "# Pip installs" >> $cleaned_file
 cat $_pip_spec_file | grep -v "#" >> $cleaned_file
+
+final_spec_file=${spec_dir}/final-spec.yml
+echo "[INFO] Generating final spec file (final-spec.yml): $final_spec_file"
+cp $initial_yaml_path $final_spec_file
 

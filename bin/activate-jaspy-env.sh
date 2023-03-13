@@ -26,5 +26,6 @@ bin_dir=${JASPY_BASE_DIR}/jaspy/miniconda_envs/jas${path_comps}/bin
 export PATH=${bin_dir}:$PATH
 
 echo "[INFO] Activating conda environment: $env_name"
-source activate $env_name
+source activate
+conda activate $env_name
 
