@@ -29,18 +29,19 @@ fi
 spec_file_path=${spec_dir}/${spec_fname}
 #pip_file_path=${spec_dir}/${pip_fname}
 
-# Run miniconda installer: does nothing if already installed
+# Run mambaforge installer: does nothing if already installed
 sub_version=$(basename $(dirname $(dirname $spec_dir)))
-miniconda_version=$(basename $spec_dir | cut -d/ -f2 | cut -d\- -f2-3)
+mambaforge_version=$(basename $spec_dir | cut -d/ -f2 | cut -d\- -f2- | rev | cut -d\- -f2- | rev)
 
-${SCRIPTDIR}/install-miniconda.sh ${sub_version} ${miniconda_version}
+${SCRIPTDIR}/install-mambaforge.sh ${sub_version} ${mambaforge_version}
 
 if [ $? -ne 0 ]; then
     echo "[ERROR] Miniconda install failed so stopping."
     exit
 fi
 
-bin_dir=${JASPY_BASE_DIR}/jaspy/miniconda_envs/jas${sub_version}/${miniconda_version}/bin
+bin_dir=${JASPY_BASE_DIR}/jaspy/mambaforge_envs/jas${sub_version}/${mambaforge_version}/bin
+
 export PATH=${bin_dir}:$PATH
 
 echo "[INFO] Creating new jaspy environment"
@@ -57,28 +58,16 @@ fi
 
 echo "[INFO] Created conda environment: $env_name"
 
-if [ -f "$pip_file_path" ]; then
-    echo "[INFO] Installing additional packages via PIP..."
-    source ${bin_dir}/activate 
-    conda activate $env_name
-    conda install --yes pip
-    pip install --upgrade pip
-    pip install -r ${pip_file_path} 
-else
-    echo "[INFO] No pip packages specified"
-fi
-
-echo "[INFO] Creating symlinks to compilers"
-
-#env_bin_dir="$(dirname ${bin_dir})/envs/${env_name}/bin"
-#cd $env_bin_dir/
-
-#prefix=x86_64-conda-linux-gnu-
-#for exe in $prefix* ; do 
-#    if [ ! -e $exe ]; then 
-#        ln -s $exe ${exe/$prefix/}
-#    fi
-#done
+#if [ -f "$pip_file_path" ]; then
+#    echo "[INFO] Installing additional packages via PIP..."
+#    source ${bin_dir}/activate 
+#    conda activate $env_name
+#    conda install --yes pip
+#    pip install --upgrade pip
+#    pip install -r ${pip_file_path} 
+#else
+#    echo "[INFO] No pip packages specified"
+#fi
 
 echo
 echo "[INFO] You can activate and use this environment with:"
