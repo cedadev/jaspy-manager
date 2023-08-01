@@ -56,7 +56,7 @@ function create_modulefile {
     env_name=$(basename $_dir)
     jas_type=$(echo $env_name | cut -d. -f1 | sed 's/[0-9]*//g')
     jas_type_version=$(echo $env_name | cut -d- -f1 | sed 's/[a-zA-Z]*//g')
-    revision=$(echo $env_name | cut -d- -f4)
+    revision=$(echo $env_name | rev | cut -d- -f1 | rev)
 
     envs_dir=$(dirname $_dir)
     main_dir=$(dirname $envs_dir)
@@ -97,7 +97,7 @@ for indx in ${!envs[@]}; do
     env_name=${envs[$indx]}
 
     echo "[INFO] Looking for env: $env_name"
-    env_dir=$(find ${JASPY_BASE_DIR}/jaspy/miniconda_envs/jas*/*/envs -maxdepth 1 -type d -name ${env_name})
+    env_dir=$(find ${JASPY_BASE_DIR}/jaspy/mambaforge_envs/jas*/*/envs -maxdepth 1 -type d -name ${env_name})
   
     if [ ! -d "$env_dir" ]; then
         echo "[WARNING] Cannot find environment directory for: ${env_name}"
