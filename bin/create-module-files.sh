@@ -16,16 +16,10 @@ arg1=$1
 if [ "$arg1" ] && [ $arg1 == "--install" ]; then
     echo "[INFO] Install 'environment-modules' package"
     yum install -y environment-modules
+    shift
 fi
 
-envs=()
-
-for arg in $@; do
-    if [ $arg == "--install" ]; then
-        continue
-    fi
-    envs+=("$arg")
-done
+envs=("$@")
 
 if [ ${#envs[@]} -eq 0 ]; then
     echo "[WARNING] Please provide environment name(s) at the command line."
@@ -70,6 +64,7 @@ function create_modulefile {
     # Create a temporary script to wrap the activation lines into a single command
     tmp_activator=/tmp/tmp-jaspy-activator.sh
     echo "source ${bin_dir}/activate" > $tmp_activator
+    echo "conda activate" >> $tmp_activator
     echo "conda activate $env_name" >> $tmp_activator
     chmod 750 $tmp_activator
 
@@ -77,8 +72,13 @@ function create_modulefile {
     # additional flags/commands are captured in a string. If you don't do
     # this then Tcl will raise an error when you try to load the module.
 # OLD - ${PREFIX}/bin/createmodule.py ${bin_dir}/activate $env_name
-    ${PREFIX}/bin/createmodule.py $tmp_activator | perl -p -e 's/^([^u][^n][^s][0-9a-zA-Z\-_]+)(\s+)(\w+)(\s+)(.+)$/\1\2\3\4"\5"/g;' | perl -p -e 's/unsetenv/\nunsetenv/g;' > $mod_file
 
+    simple_path=/usr/sbin:/usr/bin:/sbin:/bin    
+    env -i PATH="$simple_path" \
+        ${PREFIX}/bin/createmodule.py $tmp_activator \
+	| perl -p -e 's/^([^u][^n][^s][0-9a-zA-Z\-_]+)(\s+)(\w+)(\s+)(.+)$/\1\2\3\4"\5"/g;' \
+	| perl -p -e 's/unsetenv/\nunsetenv/g;' > $mod_file
+    
     # Remove temporary activator script
     rm -f $tmp_activator
 
