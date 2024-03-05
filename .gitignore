@@ -107,3 +107,6 @@ venv.bak/
 environments-*
 setup-env.sh
 quick-software-tests
+
+# emacs backups
+*~
