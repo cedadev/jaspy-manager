@@ -50,7 +50,7 @@ def make_core_packages(prev_path, prev_vns, prev_pip_vns):
         for line in f:
             line = line.replace('\n', '')
             line_out = line
-            if re.match('\s*#', line):
+            if re.match(r'\s*#', line):
                 pass
             elif line.endswith(':'):
                 key = line.split(' ')[-1][:-1]
@@ -61,7 +61,7 @@ def make_core_packages(prev_path, prev_vns, prev_pip_vns):
                 else:
                     vns_dict = None
             elif vns_dict is not None:
-                m = re.match('(\s*-\s+)(.*?)([<=>].*)?$', line)
+                m = re.match(r'(\s*-\s+)(.*?)([<=>].*)?$', line)
                 if m:
                     prefix = m.group(1)
                     name = m.group(2)

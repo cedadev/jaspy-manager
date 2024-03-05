@@ -80,7 +80,12 @@
            "url": "https://repo.anaconda.com/miniconda/Miniconda3-py39_4.9.2-Linux-x86_64.sh",
            "md5": "b4e46fcc8029e2cfa731b788f25b1d36",
            "short_id": "m3-4.9.2"
-       }
+       },
+       "mf22.11.1-4": {
+           "url": "https://repo.anaconda.com/miniconda/Miniconda3-py310_22.11.1-1-Linux-x86_64.sh",
+           "md5": "00938c3534750a0e4069499baf8f4e6dc1c2e471c86a59caa0dd03f4a9269db6",
+           "short_id": "mf22.11.1-4"
+       } 
     },
     "r3.6": {
        "m3-4.9.2": {
