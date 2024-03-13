@@ -31,7 +31,7 @@ cd $build_root
 build_dir=$build_root/esmf-$version
 
 rm -fr $build_dir
-curl -o $tarname https://github.com/esmf-org/esmf/archive/refs/tags/v$version.tar.gz
+wget -O $tarname https://github.com/esmf-org/esmf/archive/refs/tags/v$version.tar.gz
 tar xfz $tarname
 cd $build_dir
 
