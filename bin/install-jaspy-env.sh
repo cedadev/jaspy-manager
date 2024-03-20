@@ -29,25 +29,28 @@ fi
 spec_file_path=${spec_dir}/${spec_fname}
 #pip_file_path=${spec_dir}/${pip_fname}
 
-# Run mambaforge installer: does nothing if already installed
+# Run miniforge installer: does nothing if already installed
 sub_version=$(basename $(dirname $(dirname $spec_dir)))
-mambaforge_version=$(basename $spec_dir | cut -d/ -f2 | cut -d\- -f2- | rev | cut -d\- -f2- | rev)
+miniforge_version=$(basename $spec_dir | cut -d/ -f2 | cut -d\- -f2- | rev | cut -d\- -f2- | rev)
 
-${SCRIPTDIR}/install-mambaforge.sh ${sub_version} ${mambaforge_version}
+miniforge_command="${SCRIPTDIR}/install-miniforge.sh ${sub_version} ${miniforge_version}"
+echo "[INFO] Miniforge install command: ${miniforge_command}"
+$miniforge_command
 
 if [ $? -ne 0 ]; then
     echo "[ERROR] Miniconda install failed so stopping."
     exit
 fi
 
-bin_dir=${JASPY_BASE_DIR}/jaspy/mambaforge_envs/jas${sub_version}/${mambaforge_version}/bin
+bin_dir=${JASPY_BASE_DIR}/jaspy/miniforge_envs/jas${sub_version}/${miniforge_version}/bin
+echo "[INFO] Bin dir: ${bin_dir}"
 
 export PATH=${bin_dir}:$PATH
+source ${bin_dir}/activate
 
 echo "[INFO] Creating new jaspy environment"
 
 cmd="mamba env create -f ${spec_file_path}"
-
 echo "[INFO] Running: $cmd"
 $cmd
 
