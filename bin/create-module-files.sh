@@ -3,9 +3,8 @@
 # create-module-files.sh
 # ----------------------
 #
-# 1. Installs package: environment-modules if "--install" used.
-# 2. Detects all jaspy environments installed
-# 3. Writes a modulefile for each jaspy environment installed
+# 1. Detects all jaspy environments installed
+# 2. Writes a modulefile for each jaspy environment installed
 #
 
 SCRIPTDIR=$(dirname $0)
@@ -13,11 +12,17 @@ source ${SCRIPTDIR}/common.cfg
 
 arg1=$1
 
-if [ "$arg1" ] && [ $arg1 == "--install" ]; then
-    echo "[INFO] Install 'environment-modules' package"
-    yum install -y environment-modules
-    shift
-fi
+
+## Older version of the script installed environment-modules package,
+## which provided the createmodulefile.py script.  This script has been
+## dropped from the package in Rocky9.  Now instead, a copy of the
+## createmodulefile.py script is included in jaspy-manager.
+#
+# if [ "$arg1" ] && [ $arg1 == "--install" ]; then
+#     echo "[INFO] Install 'environment-modules' package"
+#     yum install -y environment-modules
+#     shift
+# fi
 
 envs=("$@")
 
@@ -75,7 +80,7 @@ function create_modulefile {
 
     simple_path=/usr/sbin:/usr/bin:/sbin:/bin    
     env -i PATH="$simple_path" \
-        ${PREFIX}/bin/createmodule.py $tmp_activator \
+        $SCRIPTDIR/createmodule.py $tmp_activator \
 	| perl -p -e 's/^([^u][^n][^s][0-9a-zA-Z\-_]+)(\s+)(\w+)(\s+)(.+)$/\1\2\3\4"\5"/g;' \
 	| perl -p -e 's/unsetenv/\nunsetenv/g;' > $mod_file
     
@@ -97,7 +102,7 @@ for indx in ${!envs[@]}; do
     env_name=${envs[$indx]}
 
     echo "[INFO] Looking for env: $env_name"
-    env_dir=$(find ${JASPY_BASE_DIR}/jaspy/mambaforge_envs/jas*/*/envs -maxdepth 1 -type d -name ${env_name})
+    env_dir=$(find ${JASPY_BASE_DIR}/jaspy/*envs/*/*/envs -maxdepth 1 -type d -name ${env_name})
   
     if [ ! -d "$env_dir" ]; then
         echo "[WARNING] Cannot find environment directory for: ${env_name}"
