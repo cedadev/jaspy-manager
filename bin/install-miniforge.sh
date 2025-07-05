@@ -15,11 +15,11 @@ fi
 # - https://github.com/conda-forge/miniforge#mambaforge
 
 if [ "$miniforge_version" == "" ]; then
-    miniforge_latest_url=https://github.com/conda-forge/miniforge/releases/latest/download/Miniforge-latest-Linux-x86_64.sh
+    miniforge_latest_url=https://github.com/conda-forge/miniforge/releases/latest/download/Miniforge3-Linux-x86_64.sh
 #Mambaforge-Linux-x86_64.sh
 else
     numeric_version=$(echo $miniforge_version | sed 's/mf[0-9]-//g')
-    miniforge_latest_url=https://github.com/conda-forge/miniforge/releases/download/${numeric_version}/Mambaforge-${numeric_version}-Linux-x86_64.sh
+    miniforge_latest_url=https://github.com/conda-forge/miniforge/releases/download/${numeric_version}/Miniforge3-${numeric_version}-Linux-x86_64.sh
 #https://github.com/conda-forge/miniforge/releases/download/${numeric_version}/Miniforge-Linux-x86_64.sh
 #Mambaforge-Linux-x86_64.sh
 fi
