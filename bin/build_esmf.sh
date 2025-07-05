@@ -8,7 +8,7 @@ set -ex
 # See https://github.com/cedadev/ceda-jaspy-envs/issues/138
 # ==========================================================
 
-version=8.6.0
+version=8.8.1
 install_dir=/appx/jasmin/jaspy/misc/esmf/$version
 build_root=/var/tmp/esmf_build
 
