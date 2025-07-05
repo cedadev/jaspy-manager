@@ -45,6 +45,12 @@ export ESMF_INSTALL_PREFIX=$install_dir
 src_files=$(grep -lrw get_geom .)
 perl -p -i.orig -e 's,\bget_geom\b,esmf_get_geom,g' $src_files
 
+#--------------------------------------------------
+# another patch to fix a build problem
+#--------------------------------------------------
+perl -p -i.orig -e '$_="#include <cstdint>\n$_" if $. == 1' src/prologue/yaml-cpp/src/emitterutils.cpp
+
+
 mkdir -p $log_dir
 
 make 2>&1 | tee $log_dir/make.log
