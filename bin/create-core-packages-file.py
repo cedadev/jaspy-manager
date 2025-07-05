@@ -37,10 +37,13 @@ def parse_final_spec(path):
             versions[name] = version
         elif isinstance(item, dict) and list(item) == ['pip']:
             for spec in item['pip']:
-                name, version = spec.split('==')
-                pip_versions[name] = version
+                try:
+                    name, version = spec.split('==')
+                    pip_versions[name] = version
+                except ValueError:
+                    sys.stderr.write(f'WARNING: ignoring pip item {spec}\n')
         else:
-            sys.stdout.write(f'ignoring {item}\n')
+            sys.stderr.write(f'WARNING: ignoring {item}\n')
     return versions, pip_versions
 
 
